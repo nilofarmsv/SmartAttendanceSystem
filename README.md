@@ -1,5 +1,7 @@
 # SmartAttendanceSystem
-Version History
+Employee Attendance and Leave Management System developed using WPF and MVVM architecture.
+
+# Version History
 
 v1.0
 - Windows Forms
@@ -17,5 +19,7 @@ v2.0
 v3.0 (Planned)
 - ASP.NET Core Web API
 - Clean Architecture
+
+
 - JWT Authentication
 - Web Admin Panel
