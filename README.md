@@ -22,7 +22,7 @@ v3.0 (Planned)
 - JWT Authentication
 - Web Admin Panel
 
-# Screenshot
+# Screenshot v-2.0
 - login
   ![Login](docs/Login.png)
 - Dashboard
