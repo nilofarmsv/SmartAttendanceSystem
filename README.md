@@ -20,6 +20,13 @@ v3.0 (Planned)
 - ASP.NET Core Web API
 - Clean Architecture
 
+#Screenshot
+- login
+- Dashboard
+- UserManagement
+- AttendanceManagement
+- LeaveManagement
+- Notification
 
 - JWT Authentication
 - Web Admin Panel
