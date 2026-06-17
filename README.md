@@ -19,6 +19,8 @@ v2.0
 v3.0 (Planned)
 - ASP.NET Core Web API
 - Clean Architecture
+- JWT Authentication
+- Web Admin Panel
 
 # Screenshot
 - login
@@ -34,9 +36,7 @@ v3.0 (Planned)
   ![LeaveManagement](docs/Leave.png)
   ![LeaveManagement](docs/LeaveManagement.png)
 - Notification
-  ![Notification](docs/CNotification.png)
-  ![Notification](docs/CNotification2.png)
-  ![Notification](docs/CNotification3.png)
+  ![Notification](docs/Notification.png)
+  ![Notification](docs/Notification2.png)
+  ![Notification](docs/Notification3.png)
 
-- JWT Authentication
-- Web Admin Panel
