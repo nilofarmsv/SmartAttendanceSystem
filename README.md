@@ -1,7 +1,7 @@
 # SmartAttendanceSystem
 Employee Attendance and Leave Management System developed using WPF and MVVM architecture.
 
-# Version History
+# Roadmap
 
 v1.0
 - Windows Forms
