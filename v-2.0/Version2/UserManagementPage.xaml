@@ -1,0 +1,172 @@
+﻿<Page x:Class="WorkSanse.UserManagementPage"
+     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:wpfui="http://schemas.lepo.co/wpfui/2022/xaml"
+xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+xmlns:local="clr-namespace:WorkSanse.Healpers"
+xmlns:vm="clr-namespace:WorkSanse.ViewModels"
+
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="1000"
+      FlowDirection="RightToLeft"
+      Background="#f5f5f5"
+      Title="مدیریت کاربران">
+    <Page.Resources>
+        <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <local:PersianDateTimeConverter x:Key="PersianDateTimeConverter"/>
+
+        <!-- Style کلی برای همه دکمه ها -->
+        <Style x:Key="HoverButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#062A36"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Content" Value="پیشفرض دکمه"/>
+            <!-- متن اصلی -->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Trigger برای MouseOver -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#062A36"/>
+                                <Setter Property="Foreground" Value="#062A36"/>
+                                <Setter Property="Content" Value="هاور فعال"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="DarkBlueDataGrid" TargetType="DataGrid">
+            <Setter Property="Background" Value="#062A36"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="RowBackground" Value="#062A36"/>
+            <Setter Property="AlternatingRowBackground" Value="#083544"/>
+            <Setter Property="GridLinesVisibility" Value="None"/>
+            <Setter Property="BorderBrush" Value="#0A3C4F"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserResizeRows" Value="False"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="SelectionUnit" Value="FullRow"/>
+        </Style>
+
+        <!-- Column Header Style -->
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#083544"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="BorderBrush" Value="#0A3C4F"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Row Style -->
+        <Style TargetType="DataGridRow">
+            <Setter Property="MinHeight" Value="36"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#0A3C4F"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#0F4C64"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Cell Style -->
+        <Style TargetType="DataGridCell">
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Page.Resources>
+    <Page.DataContext>
+        <vm:EmployeeViewModel />
+    </Page.DataContext>
+
+
+
+
+
+
+
+
+    <StackPanel Margin="20" RenderTransformOrigin="0.497,0.538" >
+
+        <!-- جستجو -->
+        <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+            
+            <wpfui:TextBox Name="Family" PlaceholderText="جستجو نام کاربر..." Width="180" Height="38"
+                Text="{Binding SearchUserName,UpdateSourceTrigger=PropertyChanged}" Background="Gray"/>
+
+        </StackPanel>
+
+
+        <!-- دکمه‌های عملیات -->
+        <StackPanel Orientation="Horizontal"  Margin="0 0 0 10">
+            <Button Style="{StaticResource HoverButtonStyle}" Content="افزودن کاربر" Width="150" Background="#00A99D" Foreground="White" BorderThickness="0" Padding="15" Height="32" Click="Rigister_Click"/>
+            <Button Name="EditUser" Style="{StaticResource HoverButtonStyle}" Content="ویرایش کاربر" Width="150" Background="#00A99D" Foreground="White" BorderThickness="0" Padding="8" Click="EditUser_Click" Command="{Binding EditCommand}"  IsEnabled="{Binding IsUserSelected}"/>
+            <Button Style="{StaticResource HoverButtonStyle}" Content="حذف کاربر" Width="150" Background="#00A99D" Foreground="White" BorderThickness="0" Padding="8" Click="DeleteUser_Click"/>
+        </StackPanel>
+
+        <!-- جدول کاربران -->
+        <DataGrid  x:Name="EmployeeManagementDataGrid" Style="{StaticResource DarkBlueDataGrid}"  ItemsSource="{Binding EmployeeViewModel}" AutoGenerateColumns="False" CanUserAddRows="False" HeadersVisibility="Column"  SelectedItem="{Binding SelectedUser, Mode=TwoWay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="نام" Binding="{Binding Name }" Width="*"/>
+                <DataGridTextColumn Header="نام خانوادگی" Binding="{Binding Family }" Width="*"/>
+                <DataGridTextColumn Header="نام کاربری" Binding="{Binding UserName }" Width="*"/>
+                <DataGridTextColumn Header="کد ملی" Binding="{Binding NationalCode}" Width="*"/>
+                <DataGridTextColumn Header="نقش" Binding="{Binding IsActive}" Width="*"/>
+                <DataGridTextColumn Header="وضعیت" Binding="{Binding Position}"  Width="*"/>
+
+            </DataGrid.Columns>
+
+
+        </DataGrid>
+
+        <!-- پنل جزئیات کاربر -->
+        <Border Background="White" CornerRadius="10" Padding="30" Margin="0 20 0 0" Width="358" Visibility="{Binding IsUserSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+            <StackPanel Orientation="Horizontal" >
+                <Border
+    Width="100" Height="100"
+    CornerRadius="10"
+    BorderBrush="#062A36"
+    BorderThickness="2"
+    Background="White"
+    Padding="2">
+
+                    <Image
+        Stretch="Uniform"
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center"
+        Source="{Binding SelectedUser.filePath}" />
+                </Border>
+
+                <StackPanel>
+                    <TextBlock Text="{Binding SelectedUser.Name, StringFormat=نام: {0}}" FontWeight="Bold" Margin="20 0 0 0"/>
+                    <TextBlock Text="{Binding SelectedUser.Family, StringFormat=نام: {0}}" FontWeight="Bold" Margin="20 0 0 0"/>
+                    <TextBlock Text="{Binding SelectedUser.Phone, StringFormat=شماره تماس: {0}}"  Margin="20 0 0 0"/>
+                    <TextBlock Text="{Binding SelectedUser.Position, StringFormat=سمت: {0}}" Margin="20 0 0 0"/>
+
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+    </StackPanel>
+
+
+</Page>

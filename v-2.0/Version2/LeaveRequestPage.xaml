@@ -1,0 +1,183 @@
+﻿<Page x:Class="WorkSanse.LeaveRequestPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:WorkSanse.Healpers"
+    
+      xmlns:wpfui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d"
+      d:DesignHeight="450"
+      d:DesignWidth="800"
+      FlowDirection="RightToLeft"
+      Background="#f5f5f5"
+      Title="درخواست مرخصی">
+
+    <Page.Resources>
+        <local:PersianDateTimeConverter x:Key="PersianDateTimeConverter"/>
+        <!-- همان استایل دکمه ها -->
+        <Style x:Key="HoverButtonStyle" TargetType="wpfui:Button">
+            <Setter Property="Background" Value="#00A99D"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="wpfui:Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="#00B4CC"/>
+                                <Setter Property="Foreground" Value="#0000FF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="DarkBlueDataGrid" TargetType="DataGrid">
+            <Setter Property="Background" Value="#062A36"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="RowBackground" Value="#062A36"/>
+            <Setter Property="AlternatingRowBackground" Value="#083544"/>
+            <Setter Property="GridLinesVisibility" Value="None"/>
+            <Setter Property="BorderBrush" Value="#0A3C4F"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserResizeRows" Value="False"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="SelectionUnit" Value="FullRow"/>
+        </Style>
+
+        <!-- Column Header Style -->
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#083544"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="BorderBrush" Value="#0A3C4F"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Row Style -->
+        <Style TargetType="DataGridRow">
+            <Setter Property="MinHeight" Value="36"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#0A3C4F"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#0F4C64"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Cell Style -->
+        <Style TargetType="DataGridCell">
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        
+
+    </Page.Resources>
+
+    <Grid Margin="20">
+        <StackPanel>
+
+            <!-- نمایش تاریخ و ساعت فارسی -->
+            <wpfui:TextBlock Text="{Binding PersianDateTime}"
+                             FontSize="16"
+                             FontWeight="Bold"
+                             Foreground="#062A36"
+                             HorizontalAlignment="Right"
+                             Margin="0 0 0 0"/>
+
+            <!-- انتخاب تاریخ شروع و پایان مرخصی -->
+            <StackPanel Orientation="Horizontal"
+                        Margin="0 0 0 0"
+                        HorizontalAlignment="Right">
+
+                <wpfui:TextBlock Text="تاریخ شروع:"
+                                 VerticalAlignment="Center"
+                                 Margin="0 0 10 0"/>
+
+
+                <DatePicker Width="150" SelectedDate="{Binding FromDate , Mode=TwoWay}" Background="#083544" Foreground="White"/>
+
+                <wpfui:TextBlock Text="تاریخ پایان:"
+                                 VerticalAlignment="Center" 
+                                 Margin="0 0 10 0"/>
+
+                <DatePicker Width="150" SelectedDate="{Binding ToDate , Mode=TwoWay}" Background="#083544" Foreground="White"/>
+            </StackPanel>
+
+            <!-- علت مرخصی -->
+            <StackPanel Margin="0 0 0 20">
+                <wpfui:TextBlock Text="علت مرخصی:"
+                                 FontWeight="Bold"
+                                 Margin="0 0 0 5"/>
+
+                <wpfui:TextBox Height="100"
+                               TextWrapping="Wrap"
+                               AcceptsReturn="True"
+                               Background="AliceBlue"
+                               BorderBrush="#CCCCCC"
+                               BorderThickness="1"
+                               Text="{Binding Reason ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <!-- دکمه ثبت درخواست -->
+            <wpfui:Button Content="ثبت درخواست"
+                          Width="200"
+                          x:Name="submit_Click"
+                          Height="45"
+                          HorizontalAlignment="Center"
+                          Style="{StaticResource HoverButtonStyle}"
+                          Command="{Binding SubmitLeaveCommand}"/>
+
+            <!-- لیست درخواست های ثبت شده کارمند -->
+            <wpfui:TextBlock Text="درخواست‌های ثبت شده:"
+                             FontWeight="Bold"
+                             Margin="0 0 0 0"/>
+
+            <wpfui:DataGrid AutoGenerateColumns="False"
+                            Height="200"
+                            Background="White"
+                            ItemsSource="{Binding MyLeaves}"
+                            Style="{StaticResource DarkBlueDataGrid}">
+                <wpfui:DataGrid.Columns>
+                    <DataGridTextColumn Header="متن"
+                     Binding="{Binding Text}"
+                     Width="*"/>
+                    <DataGridTextColumn Header="تاریخ شروع"
+                                        Binding="{Binding StartDate, Converter={StaticResource PersianDateTimeConverter} , StringFormat={}{0:yyyy/MM/dd}}"
+                                        Width="*"/>
+                    <DataGridTextColumn Header="تاریخ پایان"
+                                        Binding="{Binding EndDate, Converter={StaticResource PersianDateTimeConverter} , StringFormat={}{0:yyyy/MM/dd}}"
+                                        Width="*"/>
+                   
+                    <DataGridTextColumn Header="وضعیت"
+                                        Binding="{Binding Status}"
+                                        Width="*"/>
+                </wpfui:DataGrid.Columns>
+            </wpfui:DataGrid>
+
+        </StackPanel>
+    </Grid>
+</Page>

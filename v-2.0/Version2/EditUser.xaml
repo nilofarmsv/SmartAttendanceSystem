@@ -1,0 +1,140 @@
+﻿<Window x:Class="WorkSanse.EditUser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wpfui="http://schemas.lepo.co/wpfui/2022/xaml"
+        Title="Register"
+        Width="650" Height="650"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="#F2F4F7"
+        WindowStyle="None">
+
+    <Window.Resources>
+        <Style TargetType="wpfui:TextBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#222"/>
+            <Setter Property="BorderBrush" Value="#B0B0B0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+        <!-- HoverButtonStyle -->
+        <Style x:Key="HoverButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#00A99D"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#00C4B4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Border Background="White"
+                CornerRadius="14"
+                Padding="30"
+                Width="690"
+                Height="700"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <!-- ستون فیلدها سمت چپ -->
+                    <ColumnDefinition Width="240"/>
+                    <!-- ستون عکس سمت راست -->
+                </Grid.ColumnDefinitions>
+
+                <!-- ستون چپ: ورودی‌ها -->
+                <StackPanel Grid.Column="0"
+                            Margin="20,0,19,0"
+                            VerticalAlignment="Center"
+                            FlowDirection="RightToLeft" Height="576">
+                    <TextBlock Text="فرم ویرایش کاربر"
+                               FontSize="24"
+                               FontWeight="SemiBold"
+                               Foreground="#222"
+                               HorizontalAlignment="Center"
+                               Margin="0 0 0 15"/>
+
+                    <wpfui:TextBox Name="NameEdit"  Height="42" Margin="0 0 0 12"/>
+                    <wpfui:TextBox Name="FamilyEdit"  Height="42" Margin="0 0 0 12"/>
+                    <wpfui:TextBox Name="NationalCodeEdit"  Height="42" Margin="0 0 0 12"/>
+                    <wpfui:TextBox Name="PhoneEdit"  Height="42" Margin="0 0 0 12"/>
+                    <wpfui:TextBox Name="UserNameEdit"  Height="42" Margin="0 0 0 12"/>
+
+                   
+
+                    <Border BorderBrush="#777" BorderThickness="1"
+                            CornerRadius="10" Padding="12" Margin="0 0 0 20" Height="83">
+                        <StackPanel>
+                            <TextBlock x:Name="RoleEdit" Text="سمت"
+                                       FontWeight="Bold"
+                                       FontSize="14"
+                                       Foreground="#333"
+                                       Margin="0 0 0 8"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="315">
+                                <RadioButton x:Name="ManegementEdit" Content="مدیر" GroupName="roles" FontSize="14" Foreground="#333"/>
+                                <RadioButton x:Name="AdminEdit" Content="ادمین" GroupName="roles" FontSize="14" Foreground="#333"/>
+                                <RadioButton x:Name="EmploeeEdit" Content="کارمند" GroupName="roles" FontSize="14" Foreground="#333" Width="79"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <Button Name="EditUserButton"
+                        Content="ویرایش کاربر"
+                            Width="200"
+                            Height="45"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource HoverButtonStyle}"
+                            Click="RegisterUser_Click"/>
+                    <TextBlock Text="بازگشت"
+            Foreground="#00A99D"
+            HorizontalAlignment="Center"
+            Margin="0 15 0 0"
+            Cursor="Hand"
+            FontWeight="SemiBold"
+            MouseLeftButtonDown="Back_Click"/>
+                </StackPanel>
+
+                <!-- ستون راست: عکس + دکمه آپلود -->
+                <StackPanel Grid.Column="1"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Width="220"
+                            FlowDirection="LeftToRight">
+                    <Border Width="160" Height="160"
+                            Background="#E8EBF0"
+                            CornerRadius="80"
+                            Margin="0 0 0 15"
+                            ClipToBounds="True">
+                        <Image x:Name="ProfileImageEdit" Stretch="UniformToFill"/>
+                    </Border>
+
+                    <Button Content="آپلود عکس"
+                            Width="160"
+                            Height="40"
+                            Style="{StaticResource HoverButtonStyle}"
+                            Click="UploadPhoto_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
